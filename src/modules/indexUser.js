@@ -10,7 +10,7 @@ const {
 
 router.get('/login', validateLogin, objUser.loginUser);
 router.put('/change-password', validChangNewPassReq, objUser.changePassword);
-router.post('/create', validCreateUserReq, objUserMiddle.validateProfile, objUser.createUser);
+router.post('/create', validCreateUserReq, objUserMiddle.validateProfile, objUserMiddle.validateDatosUser, objUser.createUser);
 
 
 

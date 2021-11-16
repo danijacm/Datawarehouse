@@ -40,9 +40,8 @@ const validCreateUserReq = [
         .isNumeric()
         .not()
         .isEmpty(),
-    check('new_user', 'El campo new_user debe estar presente y debe ser un objeto JSON')
-        .exists()
-        .isJSON(),
+    check('new_user', 'El campo new_user debe estar presente y debe ser un objeto')
+        .exists(),
 
     (req, res, next) => {
         validateResult(req, res, next)

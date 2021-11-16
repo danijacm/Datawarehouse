@@ -26,7 +26,7 @@ const userQueries = {
         return sequelize.query('INSERT INTO users (name, lastname, email, profile_id, passw) VALUES(?,?,?,?,?)', {
             type: sequelize.QueryTypes.INSERT,
             replacements: userData
-        });
+        })
     },
 
     //Obtener perfil de un usuario
@@ -36,6 +36,12 @@ const userQueries = {
             replacements: [profile_id]
         })
     },
+    getEmail: (email) => {
+        return sequelize.query('SELECT email FROM users WHERE email = ?', {
+            type: sequelize.QueryTypes.SELECT,
+            replacements: [email]
+        })
+    },    
 };
 
 
