@@ -3,7 +3,7 @@ const {validateResult} = require('../helpers/validateHelper');
 
 // Validaciones para el request del login
 const validateLogin = [
-    check('user', 'El campo user debe estar prdente y tener el formato correcto')
+    check('user', 'El campo user debe estar presente y tener el formato correcto')
         .exists()
         .isEmail()
         .not()
@@ -40,9 +40,37 @@ const validCreateUserReq = [
         .isNumeric()
         .not()
         .isEmpty(),
-    check('new_user', 'El campo new_user debe estar presente y debe ser un objeto')
+    check('user_data', 'El campo new_user debe estar presente y debe ser un objeto')
         .exists(),
 
+    (req, res, next) => {
+        validateResult(req, res, next)
+    }    
+]
+
+
+const validaDeleteReq = [
+    check('user_id', 'El campo user debe estar presente y tener el formato correcto')
+        .exists()
+        .not()
+        .isEmpty(),
+    check('email', 'El campo email debe estar presente y tener el formato correcto')
+        .exists()
+        .isEmail()
+        .not()
+        .isEmpty(),
+    (req, res, next) => {
+        validateResult(req, res, next)
+    }    
+]
+
+const validaUpdateReq = [
+    check('user_id', 'El campo user debe estar presente y tener el formato correcto')
+        .exists()
+        .not()
+        .isEmpty(),
+    check('user_data', 'El campo user_data debe estar presente y debe ser un objeto')
+        .exists(),
     (req, res, next) => {
         validateResult(req, res, next)
     }    
@@ -51,5 +79,7 @@ const validCreateUserReq = [
 module.exports = {
     validateLogin,
     validChangNewPassReq,
-    validCreateUserReq
+    validCreateUserReq,
+    validaDeleteReq,
+    validaUpdateReq
 }

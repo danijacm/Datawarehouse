@@ -74,7 +74,7 @@ const objUser = {
     createUser: async (req, res) => {
     
         const {
-            new_user,
+            user_data,
         } = req.body;
 
         const {
@@ -83,7 +83,7 @@ const objUser = {
             email,
             profile,
             passw,
-        } = new_user;
+        } = user_data;
 
         try {
             const responseQuery = await userQueries.insertNewUser([name, lastname, email, profile, passw]);
@@ -97,6 +97,29 @@ const objUser = {
             res.status(500).send(new Response(true, 500, "No fue posible crear el usuario", error));
         }
     },
+
+    deleteUserData: async(req,res) => {
+        try {
+            const {email} = req.body;
+            const userData = await userQueries.getUserByEmail(email);
+            await userQueries.deleteUser(email);
+            res.status(200).send(new Response(false, 200, `El usuario ha sido eliminado correctamente`, userData));
+        } catch (error) {
+            res.status(500).send(new Response(true, 500, "No fue posible eliminar el usuario", error));
+        }
+    },    
+
+    updateUserData: async(req,res) => {
+        try {
+            const {user_data} = req.body;
+            const {name, lastname, email, profile_id, passw} = user_data;
+            //console.log(name + '-' + lastname + '-' + email + '-' + profile_id +  '-' + passw);
+            await userQueries.updateUser([name, lastname, email, profile_id, passw, email]);
+            res.status(200).send(new Response(false, 200, `El usuario ha sido actualizado correctamente`));
+        } catch (error) {
+            res.status(500).send(new Response(true, 500, "No fue posible actualizar el usuario", error));
+        }
+    }, 
 
 }
 

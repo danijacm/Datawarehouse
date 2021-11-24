@@ -30,17 +30,44 @@ const userQueries = {
     },
 
     //Obtener perfil de un usuario
-    getProfile: (profile_id) => {
-        return sequelize.query('SELECT * FROM profiles WHERE id = ?', {
+    getProfile: (user_id) => {
+        return sequelize.query('SELECT profile_id FROM users WHERE id = ?', {
             type: sequelize.QueryTypes.SELECT,
-            replacements: [profile_id]
+            replacements: [user_id]
         })
     },
+
+    //Obtiene el email idicado desde el front
     getEmail: (email) => {
         return sequelize.query('SELECT email FROM users WHERE email = ?', {
             type: sequelize.QueryTypes.SELECT,
             replacements: [email]
         })
+    }, 
+    
+    // Obtiene la información de un usuario a través de su email
+    getUserByEmail: (email) =>{
+        return sequelize.query('SELECT * FROM users WHERE email=?',{
+            type: sequelize.QueryTypes.SELECT,
+            replacements: [email]
+        });
+    },  
+
+    // Eliminacion de un usuario (empleado) del sistema
+    deleteUser: (email) =>{
+        return sequelize.query('DELETE FROM users WHERE email = ?',{
+            type: sequelize.QueryTypes.DELETE,
+            replacements: [email]
+        });
+    }, 
+    
+    // Actualiza la información de un usuario
+    updateUser: (email) => {
+        return sequelize.query('UPDATE users SET name = ?, lastname = ?, email = ?, profile_id = ?, passw = ? WHERE email = ?',{
+        //return sequelize.query(`UPDATE users SET ${userData} WHERE email = ?`,{
+            type: sequelize.QueryTypes.PUT,
+            replacements: email
+        });
     },    
 };
 
